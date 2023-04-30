@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact name="client-server:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/client_server_jar</output-path>
+    <root id="root">
+      <element id="archive" name="client-server.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="client-server" />
+      </element>
+      <element id="library" level="project" name="Maven: io.github.x-stream:mxparser:1.2.2" />
+      <element id="library" level="project" name="Maven: xmlpull:xmlpull:1.1.3.1" />
+      <element id="library" level="project" name="Maven: com.thoughtworks.xstream:xstream:1.4.20" />
+    </root>
+  </artifact>
+</component>

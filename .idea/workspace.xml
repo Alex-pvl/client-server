@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="client-server:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/artifacts/client_server_jar.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/mxparser-1.2.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/xmlpull-1.1.3.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/xstream-1.4.20.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/filters/BinaryFileFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/filters/SerialFileFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/filters/TXTFileFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/filters/XMLFileFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/gui/MainFrame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/gui/ServerDialog.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/Client.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/Image.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/Polygon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/Shape.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/ShapeFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/server/StartServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/1.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/10.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/11.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/12.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/2.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/4.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/5.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/6.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/7.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/8.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/mxparser-1.2.2.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xmlpull-1.1.3.1.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/xstream-1.4.20.jar" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2P98oK5vh7nMTalt247kCeII59r" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sasha/dev/Java/client-server/src/main/java/client&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.28390804&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sasha\dev\Java\client-server\lib" />
+      <recent name="C:\Users\sasha\dev\Java\client-server\src\main\java\client\filters" />
+      <recent name="C:\Users\sasha\dev\Java\client-server\src\main\java\client\gui" />
+      <recent name="C:\Users\sasha\dev\Java\client-server\src\main\java\client\models" />
+      <recent name="C:\Users\sasha\dev\Java\client-server\src\main\resources" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sasha\dev\Java\client-server\src\main\java\client" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.StartServer">
+    <configuration name="MainFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="client.gui.MainFrame" />
+      <module name="client-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="client.gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="StartServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.StartServer" />
+      <module name="client-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="client-server.jar" type="JarApplication" temporary="true">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/out/artifacts/client_server_jar/client-server.jar" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.MainFrame" />
+      <item itemvalue="Application.StartServer" />
+      <item itemvalue="JAR Application.client-server.jar" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.StartServer" />
+        <item itemvalue="Application.MainFrame" />
+        <item itemvalue="JAR Application.client-server.jar" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="" />
+      <created>1682858112298</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1682858112298</updated>
+      <workItem from="1682858113355" duration="2283000" />
+      <workItem from="1682862404945" duration="8999000" />
+    </task>
+    <servers />
+  </component>
+</project>
