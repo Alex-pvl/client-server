@@ -1,125 +1,119 @@
 package client.gui;
 
-import client.models.Client;
+import server.Client;
+import server.Server;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.net.ServerSocket;
 
 public class ServerDialog extends JDialog {
-	private JLabel isConnected;
-	private Client client;
-	private JList<String> clients;
-	private List<Integer> clientIds;
-	private List<String> clientNames;
-	private JPanel buttonPanel, clientsPanel, clientNamesPanel;
-	private JButton button1,
-					button2,
-					button3,
-					button4,
-					button5,
-					button6,
-					button7,
-					button8,
-					button9;
+	public JLabel isConnected;
+	public JLabel portLabel;
+	public JLabel shapeIdLabel;
+	public JTextField portTextField;
+	public JCheckBox serverCheckBox;
+	public JButton connectBtn;
+	public JButton disconnectBtn;
+	public JButton clearListBtn;
+	public JButton sendNamesBtn;
+	public JButton getListSizeBtn;
+	public JButton getShapeByIdBtn;
+	public JTextField shapeIdTextField;
+	public ServerSocket serverSocket;
+	public Client client;
 
 	public ServerDialog(ClientFrame parent) {
 		super(parent, "Server", false);
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setPreferredSize(new Dimension(500, 400));
-		setBounds(0, 0, 500, 400);
+		setPreferredSize(new Dimension(220, 300));
+		setBounds(0, 0, 220, 300);
 
 		addComponents();
 	}
 
 	private void addComponents() {
-		buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.setPreferredSize(new Dimension(260, 400));
-		buttonPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		add(buttonPanel, BorderLayout.EAST);
+		isConnected = new JLabel("Status: " + false);
+		portLabel = new JLabel("Порт: ");
+		portTextField = new JTextField(5);
+		shapeIdLabel = new JLabel("Id фигуры: ");
+		shapeIdTextField = new JTextField(2);
 
-		button1 = new JButton("Close connection");
-		button2 = new JButton("Clear Shapes list");
-		button3 = new JButton("Send Shape");
-		button4 = new JButton("Send request for Shape");
-		button5 = new JButton("Send Shape names");
-		button6 = new JButton("Send request for Shapes list size");
-		button7 = new JButton("Send request for Shape by id");
-		button8 = new JButton("Get receive Shapes list size");
-		button9 = new JButton("Update");
+		JPanel topPanel = new JPanel(new BorderLayout());
+		topPanel.add(isConnected, BorderLayout.NORTH);
+		JPanel portPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		portPanel.add(portLabel);
+		portPanel.add(portTextField);
+		portPanel.add(shapeIdLabel);
+		portPanel.add(shapeIdTextField);
+		topPanel.add(portPanel, BorderLayout.CENTER);
 
-		var buttonSize = new Dimension(250, 30);
+		serverCheckBox = new JCheckBox("Запустить сервер");
+		topPanel.add(serverCheckBox, BorderLayout.SOUTH);
 
-		button1.setPreferredSize(buttonSize);
-		button2.setPreferredSize(buttonSize);
-		button3.setPreferredSize(buttonSize);
-		button4.setPreferredSize(buttonSize);
-		button5.setPreferredSize(buttonSize);
-		button6.setPreferredSize(buttonSize);
-		button7.setPreferredSize(buttonSize);
-		button8.setPreferredSize(buttonSize);
-		button9.setPreferredSize(buttonSize);
+		add(topPanel, BorderLayout.NORTH);
 
-		button1.setFocusable(false);
-		button2.setFocusable(false);
-		button3.setFocusable(false);
-		button4.setFocusable(false);
-		button5.setFocusable(false);
-		button6.setFocusable(false);
-		button7.setFocusable(false);
-		button8.setFocusable(false);
-		button9.setFocusable(false);
+		JPanel buttonPanel = new JPanel();
+		Dimension btnSize = new Dimension(200, 25);
 
-		buttonPanel.add(button1);
-		buttonPanel.add(button2);
-		buttonPanel.add(button3);
-		buttonPanel.add(button4);
-		buttonPanel.add(button5);
-		buttonPanel.add(button6);
-		buttonPanel.add(button7);
-		buttonPanel.add(button8);
-		buttonPanel.add(button9);
-		buttonPanel.setVisible(true);
+		connectBtn = new JButton("Connect");
+		connectBtn.setPreferredSize(btnSize);
+		connectBtn.addActionListener(e -> connect());
 
-		clientsPanel = new JPanel(new BorderLayout());
-		clientsPanel.setBorder(BorderFactory.createLineBorder(Color.black, 1, true));
+		disconnectBtn = new JButton("Disconnect");
+		disconnectBtn.setPreferredSize(btnSize);
+		disconnectBtn.addActionListener(e -> disconnect());
 
-		clients = new JList<>();
+		clearListBtn = new JButton("Clear List");
+		clearListBtn.setPreferredSize(btnSize);
+		clearListBtn.addActionListener(e -> clear());
 
-		clientsPanel.add(clients);
-		add(clientsPanel);
+		sendNamesBtn = new JButton("Send Names");
+		sendNamesBtn.setPreferredSize(btnSize);
 
-		connect();
+		getListSizeBtn = new JButton("Get List size");
+		getListSizeBtn.setPreferredSize(btnSize);
+
+		getShapeByIdBtn = new JButton("Get Shape");
+		getShapeByIdBtn.setPreferredSize(btnSize);
+
+		buttonPanel.add(connectBtn);
+		buttonPanel.add(disconnectBtn);
+		buttonPanel.add(clearListBtn);
+		buttonPanel.add(sendNamesBtn);
+		buttonPanel.add(getListSizeBtn);
+		buttonPanel.add(getShapeByIdBtn);
+
+		add(buttonPanel, BorderLayout.CENTER);
 		setVisible(false);
 		setLocationRelativeTo(null);
-	}
 
-	public void getListOfClients(List<Integer> clientIds, int id) {
-		this.clientIds = clientIds;
-		String[] clientsList = new String[clientIds.size()];
-		for (int i = 0; i < clientIds.size(); i++) {
-			if (clientIds.get(i) == id) {
-				clientsList[i] = "[*] Клиент №" + clientIds.get(i);
+		serverCheckBox.addActionListener(e -> {
+			int port = Integer.parseInt(portTextField.getText().trim());
+			if (serverCheckBox.isSelected()) {
+				isConnected.setText("Status: " + true);
+				System.out.println("Сервер запущен на порту " + port);
+				while (true) {
+					Server server = new Server((ClientFrame) this.getParent(), port);
+					server.start();
+				}
 			} else {
-				clientsList[i] = "Клиент №" + clientIds.get(i);
+				isConnected.setText("Status: " + false);
 			}
-		}
-		clients.setListData(clientsList);
+		});
 	}
 
 	public void connect() {
-		client = new Client(this);
+		client = new Client(this, Integer.parseInt(portTextField.getText().trim()));
 		client.start();
 	}
 
 	public void disconnect() {
-		client = null;
-		clients.setListData(new String[0]);
+		client.disconnect();
 	}
 
-	@Override
-	public Insets getInsets() {
-		return new Insets(40, 20, 20, 5);
+	public void clear() {
+		client.clear();
 	}
 }

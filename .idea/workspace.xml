@@ -9,47 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/artifacts/client_server_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/mxparser-1.2.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/xmlpull-1.1.3.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/xstream-1.4.20.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/META-INF/MANIFEST.MF" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/filters/BinaryFileFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/filters/SerialFileFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/filters/TXTFileFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/filters/XMLFileFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/gui/MainFrame.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/gui/ServerDialog.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/Image.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/Polygon.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/Shape.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/client/models/ShapeFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/server/StartServer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/10.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/11.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/12.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/4.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/5.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/6.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/7.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/8.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/9.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/mxparser-1.2.2.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xmlpull-1.1.3.1.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/xstream-1.4.20.jar" afterDir="false" />
+    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="commit1">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/client_server_jar/client-server.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/client_server_jar/client-server.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/ServerDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/ServerDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/models/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/models/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/StartServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/StartServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +34,9 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="2P98oK5vh7nMTalt247kCeII59r" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -96,7 +65,7 @@
       <recent name="C:\Users\sasha\dev\Java\client-server\src\main\java\client" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.StartServer">
+  <component name="RunManager" selected="Application.MainFrame">
     <configuration name="MainFrame" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="client.gui.MainFrame" />
       <module name="client-server" />
@@ -135,8 +104,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.StartServer" />
         <item itemvalue="Application.MainFrame" />
+        <item itemvalue="Application.StartServer" />
         <item itemvalue="JAR Application.client-server.jar" />
       </list>
     </recent_temporary>
@@ -150,8 +119,42 @@
       <option name="presentableId" value="Default" />
       <updated>1682858112298</updated>
       <workItem from="1682858113355" duration="2283000" />
-      <workItem from="1682862404945" duration="8999000" />
+      <workItem from="1682862404945" duration="11185000" />
+      <workItem from="1682919744303" duration="351000" />
+      <workItem from="1682921954009" duration="24001000" />
+      <workItem from="1682996123608" duration="3470000" />
     </task>
+    <task id="LOCAL-00001" summary="Initialized">
+      <created>1682879244024</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1682879244024</updated>
+    </task>
+    <task id="LOCAL-00002" summary="commit1">
+      <created>1682930120165</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1682930120165</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initialized" />
+    <MESSAGE value="commit1" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit1" />
   </component>
 </project>

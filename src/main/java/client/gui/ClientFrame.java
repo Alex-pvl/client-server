@@ -43,9 +43,9 @@ public class ClientFrame extends JFrame {
 					startTypeButton,
 					stopTypeButton;
 	private JPanel buttonPanel;
-	private JCheckBox initializeConnectionCheckBox;
+	private JButton initializeConnectionButton;
 	@XStreamAsAttribute
-	private List<Shape> shapes;
+	public List<Shape> shapes;
 	private ShapeFactory shapeFactory;
 	private ServerDialog serverDialog;
 	private boolean isConnected = false;
@@ -79,7 +79,7 @@ public class ClientFrame extends JFrame {
 		shapes = new ArrayList<>();
 		shapeFactory = new ShapeFactory();
 
-		initializeConnectionCheckBox = new JCheckBox("Init server connection");
+		initializeConnectionButton = new JButton("Network");
 		// Создание выпадающего списка для выбора типа фигур
 		shapeTypeSelection = new JComboBox<>(new String[]{
 			POLYGON,
@@ -121,7 +121,7 @@ public class ClientFrame extends JFrame {
 		comboBoxPanel.add(shapeTypeSelection);
 		comboBoxPanel.add(verticesLabel);
 		comboBoxPanel.add(textField);
-		comboBoxPanel.add(initializeConnectionCheckBox);
+		comboBoxPanel.add(initializeConnectionButton);
 
 		// Создание главной панели для рисовки объектов
 		drawingPanel = new MyPanel();
@@ -150,8 +150,8 @@ public class ClientFrame extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
-				super.windowClosing(e);
-				shapes.forEach(Shape::stop);
+			super.windowClosing(e);
+			shapes.forEach(Shape::stop);
 			}
 		});
 
@@ -178,18 +178,9 @@ public class ClientFrame extends JFrame {
 		loadXMLMenuItem.addActionListener(e -> loadFromXML());
 
 		// сервер
-		initServer();
-	}
-
-	private void initServer() {
-		initializeConnectionCheckBox.addItemListener(e -> {
-			if (e.getStateChange() == ItemEvent.SELECTED) {
-				serverDialog = new ServerDialog(this);
-				serverDialog.setVisible(true);
-			} else {
-				initializeConnectionCheckBox.setSelected(false);
-				serverDialog.setVisible(false);
-			}
+		initializeConnectionButton.addActionListener(e -> {
+			serverDialog = new ServerDialog(this);
+			serverDialog.setVisible(true);
 		});
 	}
 

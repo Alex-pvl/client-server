@@ -1,23 +1,44 @@
 package server;
 
+import client.gui.ClientFrame;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Server extends Thread {
+	public ServerSocket ss;
 	public Socket s;
-	public int id;
 	public int command;
 	public ObjectOutputStream out;
 	public ObjectInputStream in;
 	public boolean isConnected = true;
+	public ClientFrame clientFrame;
+	int port;
 
-	public Server(Socket s, int id) {
-		this.s = s;
-		this.id = id;
+	public Server(ClientFrame clientFrame, int port) {
+		this.clientFrame = clientFrame;
+		this.port = port;
+
+		try {
+			ss = new ServerSocket(port);
+			System.out.println("Server started on port #" + port);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		setDaemon(true);
+		setPriority(NORM_PRIORITY);
+
+		try {
+			s = ss.accept();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -25,22 +46,27 @@ public class Server extends Thread {
 		try {
 			out = new ObjectOutputStream(s.getOutputStream());
 			in = new ObjectInputStream(s.getInputStream());
-			out.writeObject(StartServer.clientIds);
-			out.writeInt(id);
-			out.flush();
 
 			while (isConnected) {
 				command = in.readInt();
 				switch (command) {
-					case 1 -> {}
-					case 2 -> {}
+					case 0 -> {
+						System.out.println("Connecting");
+					}
+					case 1 -> {
+						System.out.println("Disconnecting...");
+						disconnect();
+					}
+					case 2 -> {
+						System.out.println("Clear shapes");
+
+					}
 					case 3 -> {}
 					case 4 -> {}
 					case 5 -> {}
 					case 6 -> {}
 					case 7 -> {}
 					case 8 -> {}
-					case 9 -> {}
 					default -> System.out.println("Invalid command");
 				}
 			}
@@ -48,15 +74,12 @@ public class Server extends Thread {
 			e.printStackTrace();
 		} finally {
 			disconnect();
-			StartServer.updateAll();
 		}
 	}
 
 	public void update() {
 		try {
 			out.writeInt(9);
-			List<Integer> newClientIds = new ArrayList<>(StartServer.clientIds);
-			out.writeObject(newClientIds);
 			out.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -69,13 +92,6 @@ public class Server extends Thread {
 			in.close();
 			out.close();
 			s.close();
-			StartServer.clients.remove(id);
-			for (int i = 0; i < StartServer.clientIds.size(); i++) {
-				if (StartServer.clientIds.get(i) == id) {
-					StartServer.clientIds.remove(i);
-					i--;
-				}
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
