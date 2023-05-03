@@ -2,32 +2,35 @@ package server;
 
 import client.gui.ClientFrame;
 import client.gui.ServerDialog;
+import client.models.Image;
+import client.models.Shape;
 
+import javax.swing.*;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+
+import static server.TCPProtocol.*;
 
 public class Client extends Thread {
-	public Socket s = null;
-	public ObjectOutputStream out;
-	public ObjectInputStream in;
-	public int command;
+	public Socket s;
 	public int port;
 	public ServerDialog serverDialog;
+	public ArrayList<String> shapeNames;
 	public ClientFrame clientFrame;
 	public boolean isConnected = true;
 
-	public Client(ServerDialog serverDialog, int port) {
+	public Client(ServerDialog serverDialog, ClientFrame clientFrame, int port) {
 		this.serverDialog = serverDialog;
-		this.clientFrame = (ClientFrame)serverDialog.getParent();
+		this.clientFrame = clientFrame;
 		this.port = port;
 
 		try {
 			s = new Socket("localhost", port);
-			System.out.println("Client started");
+			System.out.println("client: [started]");
 		} catch (IOException e) {
-			e.printStackTrace();
+			serverDialog.isConnected.setText("Status: " + false);
 		}
 		setDaemon(true);
 		setPriority(NORM_PRIORITY);
@@ -35,52 +38,48 @@ public class Client extends Thread {
 
 	@Override
 	public void run() {
-		try {
-			s = new Socket("localhost", port);
-			isConnected = true;
-			this.serverDialog.isConnected.setText("Status: " + true);
-			out = new ObjectOutputStream(s.getOutputStream());
-			in = new ObjectInputStream(s.getInputStream());
-
-			while (isConnected) {
-				if (in.available() == 0) {
-					if (command != -1) {
-						switch (command) {
-
+		while (isConnected) {
+			try {
+				if (!s.isClosed()) {
+					LineData lineData = listenServer(s);
+					switch (lineData.code) {
+						case SEND_LIST_SIZE -> {
+							clientFrame.drawingPanel.repaint();
+							System.out.println("client: [got list size =" + (Integer)lineData.data + " ]");
+						}
+						case SEND_SHAPE -> {
+							int id = ((LineData)lineData.data).code;
+							Shape shape = (Shape)((LineData)lineData.data).data;
+							clientFrame.shapes.add(shape);
+							clientFrame.shapes.forEach(s -> {
+								s.setComponent(clientFrame.drawingPanel);
+								if (s instanceof Image) {
+									((Image) s).loadImage();
+								}
+							});
+							clientFrame.drawingPanel.repaint();
+							System.out.println("client: [got #" + id + " shape]");
+						}
+						case SEND_ALL_SHAPES -> {
+							clientFrame.shapes = (ArrayList<Shape>)lineData.data;
+							clientFrame.shapes.forEach(s -> {
+								s.setComponent(clientFrame.drawingPanel);
+								if (s instanceof Image) {
+									((Image) s).loadImage();
+								}
+							});
+							clientFrame.drawingPanel.repaint();
+							System.out.println("client: [got all shapes]");
+						}
+						case GET_SHAPE_NAMES -> {
+							System.out.println("server: [all shape names were sent]");
 						}
 					}
-				} else {
-					int commandFromServer = in.readInt();
-					System.out.println("Command id from server: " + commandFromServer);
-					switch (commandFromServer) {
-
-					}
-				}
+				} else break;
+			} catch (Exception e) {
+				isConnected = false;
 			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			System.out.println("Closing...");
-			try {
-				in.close();
-				out.close();
-				s.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			System.out.println("client: [stop running]");
 		}
 	}
-
-	public void disconnect() {
-		this.command = 1;
-		this.serverDialog.isConnected.setText("Status: " + false);
-	}
-
-	public void clear() {
-		this.command = 2;
-		clientFrame.shapes.clear();
-	}
-
-	// TODO остальные команды
-
 }

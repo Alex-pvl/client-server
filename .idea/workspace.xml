@@ -9,14 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="commit1">
+    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="Добавил модели сервера и клиента.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/artifacts/client_server_jar/client-server.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/client_server_jar/client-server.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/ServerDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/ServerDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/models/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/models/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/client/models/Polygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/models/Polygon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/Protocol.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/StartServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/StartServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +33,16 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitRewordedCommitMessages">
+    <option name="commitMessagesMapping">
+      <RewordedCommitMessageMapping>
+        <option name="originalMessage" value="commit1" />
+        <option name="rewordedMessage" value="Добавил модели сервера и клиента." />
+      </RewordedCommitMessageMapping>
+    </option>
+    <option name="currentCommit" value="1" />
+    <option name="onto" value="48e0118052f03b0b9fdaf6fb7d5a1ed3b0ee3764" />
   </component>
   <component name="ProjectId" id="2P98oK5vh7nMTalt247kCeII59r" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -122,7 +133,9 @@
       <workItem from="1682862404945" duration="11185000" />
       <workItem from="1682919744303" duration="351000" />
       <workItem from="1682921954009" duration="24001000" />
-      <workItem from="1682996123608" duration="3470000" />
+      <workItem from="1682996123608" duration="4057000" />
+      <workItem from="1683102150913" duration="7039000" />
+      <workItem from="1683120013577" duration="7810000" />
     </task>
     <task id="LOCAL-00001" summary="Initialized">
       <created>1682879244024</created>
@@ -138,7 +151,14 @@
       <option name="project" value="LOCAL" />
       <updated>1682930120165</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Добавил модели сервера и клиента.">
+      <created>1683002306282</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1683002306282</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,6 +175,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initialized" />
     <MESSAGE value="commit1" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit1" />
+    <MESSAGE value="Добавил модели сервера и клиента." />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавил модели сервера и клиента." />
   </component>
 </project>

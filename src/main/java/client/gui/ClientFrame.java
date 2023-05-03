@@ -34,7 +34,7 @@ public class ClientFrame extends JFrame {
 					saveXMLMenuItem,
 					loadXMLMenuItem;
 	private JPanel comboBoxPanel;
-	private MyPanel drawingPanel;
+	public MyPanel drawingPanel;
 	private JComboBox<String> shapeTypeSelection;
 	private JTextField textField;
 	private JLabel verticesLabel;
@@ -45,9 +45,9 @@ public class ClientFrame extends JFrame {
 	private JPanel buttonPanel;
 	private JButton initializeConnectionButton;
 	@XStreamAsAttribute
-	public List<Shape> shapes;
+	public ArrayList<Shape> shapes;
 	private ShapeFactory shapeFactory;
-	private ServerDialog serverDialog;
+	public ServerDialog serverDialog;
 	private boolean isConnected = false;
 
 	public ClientFrame() throws IOException {
@@ -61,10 +61,10 @@ public class ClientFrame extends JFrame {
 
 	@Override
 	public Insets getInsets() {
-		return new Insets(10, 20, 10, 20);
+		return new Insets(30, 20, 10, 20);
 	}
 
-	private class MyPanel extends JPanel {
+	public class MyPanel extends JPanel {
 
 		@Override
 		protected void paintComponent(Graphics g) {
@@ -380,7 +380,7 @@ public class ClientFrame extends JFrame {
 			xstream.allowTypeHierarchy(Image.class);
 			try(FileReader reader = new FileReader(selectedFile)) {
 				shapes.clear();
-				shapes = (List<Shape>) xstream.fromXML(reader);
+				shapes = (ArrayList<Shape>) xstream.fromXML(reader);
 				shapes.forEach(s -> {
 					if (s instanceof Image) {
 						((Image) s).loadImage();

@@ -30,7 +30,7 @@ public class Polygon extends Shape implements Serializable {
 
 	@Override
 	public String getName() {
-		return this.getClass().getName();
+		return this.getClass().getSimpleName();
 	}
 
 	@Override
