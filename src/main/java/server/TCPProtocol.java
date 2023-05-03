@@ -5,7 +5,6 @@ import client.models.Shape;
 import java.io.*;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 
 public class TCPProtocol {
 	public static final int UNKNOWN = -1;

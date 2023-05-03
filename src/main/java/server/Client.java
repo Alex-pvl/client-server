@@ -5,11 +5,9 @@ import client.gui.ServerDialog;
 import client.models.Image;
 import client.models.Shape;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 
 import static server.TCPProtocol.*;
 

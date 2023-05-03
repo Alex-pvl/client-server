@@ -29,8 +29,6 @@ public class ServerDialog extends JDialog {
 	public JButton getAllShapesBtn;
 	public JTextField shapeIdTextField;
 	public Client client;
-	public JFrame namesFrame;
-	public JList<String> namesList;
 
 	public ClientFrame clientFrame;
 

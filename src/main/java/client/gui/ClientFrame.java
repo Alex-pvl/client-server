@@ -1,20 +1,25 @@
 package client.gui;
 
-import client.filters.*;
-import client.models.*;
+import client.filters.BinaryFileFilter;
+import client.filters.SerialFileFilter;
+import client.filters.TXTFileFilter;
+import client.filters.XMLFileFilter;
 import client.models.Image;
 import client.models.Polygon;
 import client.models.Shape;
+import client.models.ShapeFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 
