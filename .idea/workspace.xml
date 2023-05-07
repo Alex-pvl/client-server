@@ -9,13 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="бизнес-логика">
+    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="ui для udp">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/artifacts/client_server_jar/client-server.jar" beforeDir="false" afterPath="$PROJECT_DIR$/out/artifacts/client_server_jar/client-server.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/ServerDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/ServerDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/tcp/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/tcp/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/TCPProtocol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/tcp/TCPProtocol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/udp/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/udp/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/udp/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/udp/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/udp/UDPProtocol.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +32,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+  }
+}</component>
   <component name="GitRewordedCommitMessages">
     <option name="commitMessagesMapping">
       <RewordedCommitMessageMapping>
@@ -41,6 +45,14 @@
     </option>
     <option name="currentCommit" value="1" />
     <option name="onto" value="48e0118052f03b0b9fdaf6fb7d5a1ed3b0ee3764" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="9275dbbe-1f47-4376-8317-a327b3ae3d43" />
+        <option name="url" value="https://github.com/Alex-pvl/client-server.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="ProjectId" id="2P98oK5vh7nMTalt247kCeII59r" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -135,7 +147,7 @@
       <workItem from="1683102150913" duration="7039000" />
       <workItem from="1683120013577" duration="10566000" />
       <workItem from="1683352378142" duration="12400000" />
-      <workItem from="1683433166571" duration="13860000" />
+      <workItem from="1683433166571" duration="25768000" />
     </task>
     <task id="LOCAL-00001" summary="Initialized">
       <created>1682879244024</created>
@@ -172,7 +184,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683129548517</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="ui для udp">
+      <created>1683449417199</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1683449417199</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -191,6 +210,7 @@
     <MESSAGE value="commit1" />
     <MESSAGE value="Добавил модели сервера и клиента." />
     <MESSAGE value="бизнес-логика" />
-    <option name="LAST_COMMIT_MESSAGE" value="бизнес-логика" />
+    <MESSAGE value="ui для udp" />
+    <option name="LAST_COMMIT_MESSAGE" value="ui для udp" />
   </component>
 </project>

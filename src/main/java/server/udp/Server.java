@@ -1,14 +1,15 @@
 package server.udp;
 
 import client.gui.ClientFrame;
+import client.models.Shape;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.ArrayList;
 
 public class Server extends Thread {
 	public DatagramSocket datagramSocket;
@@ -22,7 +23,8 @@ public class Server extends Thread {
 		this.portOut = portOut;
 
 		try {
-			datagramSocket = new DatagramSocket();
+			datagramSocket = new DatagramSocket(portOut);
+			clientFrame.connectionStatusLabel.setText("Connection: " + true);
 			System.out.println("server: [started on port #" + portOut + "]");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -35,126 +37,94 @@ public class Server extends Thread {
 	@Override
 	public void run() {
 		while (isConnected) {
+			byte[] buffer = new byte[1024];
+			DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 			try {
-				Thread.sleep(100);
-				DatagramPacket datagramPacket;
+				datagramSocket.receive(packet);
+				String messageFromClient = new String(buffer, 0, packet.getLength());
+				handleMessage(messageFromClient);
+			} catch (IOException e) {
 
-				ByteArrayOutputStream bos = new ByteArrayOutputStream();
-				ObjectOutput out = null;
-				try {
-					out = new ObjectOutputStream(bos);
-					out.writeObject(clientFrame.shapes);
-
-					byte[] blob = bos.toByteArray();
-
-					datagramPacket = new DatagramPacket(blob, blob.length, InetAddress.getLocalHost(), portOut);
-					datagramSocket.send(datagramPacket);
-				} finally {
-					try {
-						if (out != null) {
-							out.close();
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					try {
-						bos.close();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				isConnected = false;
 			}
 		}
+		datagramSocket.close();
 		System.out.println("server: [stopped]");
 	}
+
+	public void send(String message) {
+		try {
+			byte[] buffer = message.getBytes();
+			DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getLocalHost(), portIn);
+			datagramSocket.send(packet);
+			System.out.println("server: [sent \"" + message + "\" command]");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void handleMessage(String message) {
+		String[] parts = message.trim().split(":");
+		String command = parts[0];
+		switch (command) {
+			case "CLEAR" -> {
+				clientFrame.shapes.clear();
+				clientFrame.drawingPanel.repaint();
+				System.out.println("server: [shapes list cleared]");
+			}
+			case "CLOSE" -> {
+				clientFrame.connectionStatusLabel.setText("Connection: " + false);
+				send("CLOSE");
+				datagramSocket.close();
+				System.out.println("server: [connection closed]");
+			}
+			case "GET SIZE" -> {
+				int size = clientFrame.shapes.size();
+				send("SEND SIZE:" + size);
+			}
+			case "SEND NAMES" -> {
+				var names = parts[1];
+				System.out.println("server: [received shape names: " + names);
+			}
+			case "GET SHAPE" -> {
+				int id = Integer.parseInt(parts[1]);
+				Shape s = clientFrame.shapes.get(id);
+				send("SEND SHAPE");
+				sendShape(s);
+			}
+			case "GET ALL SHAPES" -> {
+				var shapes = clientFrame.shapes;
+				send("SEND ALL SHAPES");
+				sendAllShapes(shapes);
+			}
+			default -> System.out.println("server: [invalid command]");
+		}
+	}
+
+	private void sendShape(Shape shape) {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(shape);
+			oos.flush();
+			byte[] buffer = baos.toByteArray();
+			DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getLocalHost(), portIn);
+			datagramSocket.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void sendAllShapes(ArrayList<Shape> shapes) {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(shapes);
+			oos.flush();
+			byte[] buffer = baos.toByteArray();
+			DatagramPacket packet = new DatagramPacket(buffer, buffer.length, InetAddress.getLocalHost(), portIn);
+			datagramSocket.send(packet);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }
-
-
-//public class ServerUDP extends Thread {
-//	private DatagramSocket socket;
-//	private ArrayList<Object> shapes = new ArrayList<>();
-//	private boolean isRunning = true;
-//
-//	public ServerUDP(int port) {
-//		try {
-//			socket = new DatagramSocket(port);
-//			System.out.println("Server: [started on port #" + port + "]");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	@Override
-//	public void run() {
-//		while (isRunning) {
-//			try {
-//				byte[] buffer = new byte[1024];
-//				DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
-//				socket.receive(packet);
-//
-//				ByteArrayInputStream bais = new ByteArrayInputStream(packet.getData(), 0, packet.getLength());
-//				ObjectInputStream ois = new ObjectInputStream(bais);
-//				String command = (String) ois.readObject();
-//
-//				switch (command) {
-//					case "CLEAR":
-//						shapes.clear();
-//						break;
-//					case "ADD":
-//						Object shape = ois.readObject();
-//						shapes.add(shape);
-//						break;
-//					case "GET":
-//						int index = ois.readInt();
-//						if (index >= 0 && index < shapes.size()) {
-//							Object result = shapes.get(index);
-//							sendObject(result, packet.getAddress(), packet.getPort());
-//						}
-//						break;
-//					case "SIZE":
-//						sendObject(shapes.size(), packet.getAddress(), packet.getPort());
-//						break;
-//					case "GET_NAMES":
-//						ArrayList<String> names = new ArrayList<>();
-//						for (Object obj : shapes) {
-//							names.add(obj.getClass().getSimpleName());
-//						}
-//						sendObject(names, packet.getAddress(), packet.getPort());
-//						break;
-//					default:
-//						break;
-//				}
-//
-//				ois.close();
-//				bais.close();
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		socket.close();
-//		System.out.println("Server: [stopped]");
-//	}
-//
-//	public void stopServer() {
-//		isRunning = false;
-//	}
-//
-//	private void sendObject(Object object, InetAddress address, int port) {
-//		try {
-//			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//			ObjectOutputStream oos = new ObjectOutputStream(baos);
-//			oos.writeObject(object);
-//			byte[] buffer = baos.toByteArray();
-//			DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, port);
-//			socket.send(packet);
-//			oos.close();
-//			baos.close();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//	}
-//}
-

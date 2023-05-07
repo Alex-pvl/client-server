@@ -23,7 +23,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 public class ClientFrame extends JFrame {
@@ -42,6 +41,7 @@ public class ClientFrame extends JFrame {
 					saveXMLMenuItem,
 					loadXMLMenuItem;
 	private JPanel comboBoxPanel;
+	private JPanel serverPanel0;
 	private JPanel serverPanel1;
 	private JPanel serverPanel2;
 	public MyPanel drawingPanel;
@@ -53,9 +53,8 @@ public class ClientFrame extends JFrame {
 					startTypeButton,
 					stopTypeButton;
 	private JPanel movingPanel;
-	private JButton initializeConnectionButton;
 	@XStreamAsAttribute
-	public CopyOnWriteArrayList<Shape> shapes;
+	public ArrayList<Shape> shapes;
 	private ShapeFactory shapeFactory;
 	public JTextField portInTextField;
 	public JTextField portOutTextField;
@@ -64,6 +63,7 @@ public class ClientFrame extends JFrame {
 	public JButton serverBtn;
 	public JButton clientBtn;
 
+	public JButton closeConnectionBtn;
 	public JButton clearListBtn;
 	public JButton sendNamesBtn;
 	public JButton getListSizeBtn;
@@ -71,6 +71,10 @@ public class ClientFrame extends JFrame {
 	public JButton getAllShapesBtn;
 	public JLabel shapeIdLabel;
 	public JTextField shapeIdTextField;
+
+	public JLabel connectionStatusLabel;
+	public JLabel shapesSizeLabel;
+
 	public Client client;
 
 	public ClientFrame() throws IOException {
@@ -99,10 +103,9 @@ public class ClientFrame extends JFrame {
 	}
 
 	private void addComponents() {
-		shapes = new CopyOnWriteArrayList<>();
+		shapes = new ArrayList<>();
 		shapeFactory = new ShapeFactory();
 
-		initializeConnectionButton = new JButton("Network");
 		// Создание выпадающего списка для выбора типа фигур
 		shapeTypeSelection = new JComboBox<>(new String[]{
 			POLYGON,
@@ -144,7 +147,6 @@ public class ClientFrame extends JFrame {
 		comboBoxPanel.add(shapeTypeSelection);
 		comboBoxPanel.add(verticesLabel);
 		comboBoxPanel.add(textField);
-		comboBoxPanel.add(initializeConnectionButton);
 
 		// Создание главной панели для рисовки объектов
 		drawingPanel = new MyPanel();
@@ -164,11 +166,17 @@ public class ClientFrame extends JFrame {
 		movingPanel.add(startTypeButton);
 		movingPanel.add(stopTypeButton);
 
+		// UDP
 		var btnSize = new Dimension(150, 25);
+		serverPanel0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		serverPanel0.setPreferredSize(new Dimension(350, 20));
 		serverPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		serverPanel1.setPreferredSize(new Dimension(350, 60));
 		serverPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		serverPanel2.setPreferredSize(new Dimension(500, 60));
+
+		connectionStatusLabel = new JLabel("Connection: " + false);
+		shapesSizeLabel = new JLabel("Size: " + shapes.size());
 
 		portInLabel = new JLabel("Port (in): ");
 		portInTextField = new JTextField(3);
@@ -192,33 +200,62 @@ public class ClientFrame extends JFrame {
 		clientBtn.addActionListener(e -> {
 			int portIn = Integer.parseInt(portInTextField.getText().trim());
 			int portOut = Integer.parseInt(portOutTextField.getText().trim());
-			Client client = new Client(this, portOut, portIn);
+			client = new Client(this, portOut, portIn);
 			client.start();
 		});
+
+		closeConnectionBtn = new JButton("Close Connection");
+		closeConnectionBtn.setPreferredSize(btnSize);
+		closeConnectionBtn.addActionListener(e -> {
+			client.send("CLOSE");
+		});
+
 		clearListBtn = new JButton("Clear");
 		clearListBtn.setPreferredSize(btnSize);
+		clearListBtn.addActionListener(e -> {
+			client.send("CLEAR");
+		});
 
 		sendNamesBtn = new JButton("Send Names");
 		sendNamesBtn.setPreferredSize(btnSize);
+		sendNamesBtn.addActionListener(e -> {
+			var names = shapes.stream()
+				.map(Shape::toString)
+				.toList();
+			client.send("SEND NAMES:" + names);
+		});
 
 		getListSizeBtn = new JButton("Get List Size");
 		getListSizeBtn.setPreferredSize(btnSize);
+		getListSizeBtn.addActionListener(e -> {
+			client.send("GET SIZE");
+		});
 
 		getShapeByIdBtn = new JButton("Get Shape");
 		getShapeByIdBtn.setPreferredSize(btnSize);
+		getShapeByIdBtn.addActionListener(e -> {
+			int id = Integer.parseInt(shapeIdTextField.getText().trim());
+			client.send("GET SHAPE:" + id);
+		});
 
 		getAllShapesBtn = new JButton("Get All Shapes");
 		getAllShapesBtn.setPreferredSize(btnSize);
+		getAllShapesBtn.addActionListener(e -> {
+			client.send("GET ALL SHAPES");
+		});
 
+
+		serverPanel0.add(connectionStatusLabel, BorderLayout.WEST);
+		serverPanel0.add(shapesSizeLabel, BorderLayout.EAST);
 		serverPanel1.add(portInLabel);
 		serverPanel1.add(portInTextField);
-
 		serverPanel1.add(portOutLabel);
 		serverPanel1.add(portOutTextField);
 		serverPanel1.add(shapeIdLabel);
 		serverPanel1.add(shapeIdTextField);
 		serverPanel1.add(serverBtn);
 		serverPanel1.add(clientBtn);
+		serverPanel2.add(closeConnectionBtn);
 		serverPanel2.add(clearListBtn);
 		serverPanel2.add(sendNamesBtn);
 		serverPanel2.add(getListSizeBtn);
@@ -226,11 +263,12 @@ public class ClientFrame extends JFrame {
 		serverPanel2.add(getAllShapesBtn);
 
 		var buttonPanel = new JPanel();
-		buttonPanel.setPreferredSize(new Dimension(500, 200));
+		buttonPanel.setPreferredSize(new Dimension(500, 230));
 
 		var serverPanels = new JPanel();
-		serverPanels.setPreferredSize(new Dimension(500, 150));
-		serverPanels.add(serverPanel1, BorderLayout.NORTH);
+		serverPanels.setPreferredSize(new Dimension(500, 180));
+		serverPanels.add(serverPanel0, BorderLayout.NORTH);
+		serverPanels.add(serverPanel1);
 		serverPanels.add(serverPanel2, BorderLayout.SOUTH);
 
 		buttonPanel.add(movingPanel, BorderLayout.NORTH);
@@ -468,7 +506,7 @@ public class ClientFrame extends JFrame {
 			xstream.allowTypeHierarchy(Image.class);
 			try(FileReader reader = new FileReader(selectedFile)) {
 				shapes.clear();
-				shapes = (CopyOnWriteArrayList<Shape>) xstream.fromXML(reader);
+				shapes = (ArrayList<Shape>) xstream.fromXML(reader);
 				shapes.forEach(s -> {
 					if (s instanceof Image) {
 						((Image) s).loadImage();
