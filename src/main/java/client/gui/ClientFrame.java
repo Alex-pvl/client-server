@@ -10,6 +10,8 @@ import client.models.Shape;
 import client.models.ShapeFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
+import server.udp.Client;
+import server.udp.Server;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +23,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Consumer;
 
 public class ClientFrame extends JFrame {
@@ -39,6 +42,8 @@ public class ClientFrame extends JFrame {
 					saveXMLMenuItem,
 					loadXMLMenuItem;
 	private JPanel comboBoxPanel;
+	private JPanel serverPanel1;
+	private JPanel serverPanel2;
 	public MyPanel drawingPanel;
 	private JComboBox<String> shapeTypeSelection;
 	private JTextField textField;
@@ -47,18 +52,31 @@ public class ClientFrame extends JFrame {
 					stopAllButton,
 					startTypeButton,
 					stopTypeButton;
-	private JPanel buttonPanel;
+	private JPanel movingPanel;
 	private JButton initializeConnectionButton;
 	@XStreamAsAttribute
-	public ArrayList<Shape> shapes;
+	public CopyOnWriteArrayList<Shape> shapes;
 	private ShapeFactory shapeFactory;
-	public ServerDialog serverDialog;
-	private boolean isConnected = false;
+	public JTextField portInTextField;
+	public JTextField portOutTextField;
+	public JLabel portInLabel;
+	public JLabel portOutLabel;
+	public JButton serverBtn;
+	public JButton clientBtn;
+
+	public JButton clearListBtn;
+	public JButton sendNamesBtn;
+	public JButton getListSizeBtn;
+	public JButton getShapeByIdBtn;
+	public JButton getAllShapesBtn;
+	public JLabel shapeIdLabel;
+	public JTextField shapeIdTextField;
+	public Client client;
 
 	public ClientFrame() throws IOException {
 		super("Client");
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-		setSize(new Dimension(900, 600));
+		setSize(new Dimension(750, 750));
 
 		addComponents();
 		addListeners();
@@ -81,7 +99,7 @@ public class ClientFrame extends JFrame {
 	}
 
 	private void addComponents() {
-		shapes = new ArrayList<>();
+		shapes = new CopyOnWriteArrayList<>();
 		shapeFactory = new ShapeFactory();
 
 		initializeConnectionButton = new JButton("Network");
@@ -140,13 +158,84 @@ public class ClientFrame extends JFrame {
 		stopTypeButton = new JButton("Stop (selected type)");
 
 		// Создание панели для кнопок
-		buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		buttonPanel.add(startAllButton);
-		buttonPanel.add(stopAllButton);
-		buttonPanel.add(startTypeButton);
-		buttonPanel.add(stopTypeButton);
+		movingPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		movingPanel.add(startAllButton);
+		movingPanel.add(stopAllButton);
+		movingPanel.add(startTypeButton);
+		movingPanel.add(stopTypeButton);
 
-		// Добавление компонентов
+		var btnSize = new Dimension(150, 25);
+		serverPanel1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		serverPanel1.setPreferredSize(new Dimension(350, 60));
+		serverPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		serverPanel2.setPreferredSize(new Dimension(500, 60));
+
+		portInLabel = new JLabel("Port (in): ");
+		portInTextField = new JTextField(3);
+		portInTextField.setText("5001");
+		portOutLabel = new JLabel("Port (out): ");
+		portOutTextField = new JTextField(3);
+		portOutTextField.setText("5002");
+		shapeIdLabel = new JLabel("Shape ID: ");
+		shapeIdTextField = new JTextField(1);
+		shapeIdTextField.setText("0");
+		serverBtn = new JButton("Launch Server");
+		serverBtn.setPreferredSize(btnSize);
+		serverBtn.addActionListener(e -> {
+			int portIn = Integer.parseInt(portInTextField.getText().trim());
+			int portOut = Integer.parseInt(portOutTextField.getText().trim());
+			Server server = new Server(this, portOut, portIn);
+			server.start();
+		});
+		clientBtn = new JButton("Launch Client");
+		clientBtn.setPreferredSize(btnSize);
+		clientBtn.addActionListener(e -> {
+			int portIn = Integer.parseInt(portInTextField.getText().trim());
+			int portOut = Integer.parseInt(portOutTextField.getText().trim());
+			Client client = new Client(this, portOut, portIn);
+			client.start();
+		});
+		clearListBtn = new JButton("Clear");
+		clearListBtn.setPreferredSize(btnSize);
+
+		sendNamesBtn = new JButton("Send Names");
+		sendNamesBtn.setPreferredSize(btnSize);
+
+		getListSizeBtn = new JButton("Get List Size");
+		getListSizeBtn.setPreferredSize(btnSize);
+
+		getShapeByIdBtn = new JButton("Get Shape");
+		getShapeByIdBtn.setPreferredSize(btnSize);
+
+		getAllShapesBtn = new JButton("Get All Shapes");
+		getAllShapesBtn.setPreferredSize(btnSize);
+
+		serverPanel1.add(portInLabel);
+		serverPanel1.add(portInTextField);
+
+		serverPanel1.add(portOutLabel);
+		serverPanel1.add(portOutTextField);
+		serverPanel1.add(shapeIdLabel);
+		serverPanel1.add(shapeIdTextField);
+		serverPanel1.add(serverBtn);
+		serverPanel1.add(clientBtn);
+		serverPanel2.add(clearListBtn);
+		serverPanel2.add(sendNamesBtn);
+		serverPanel2.add(getListSizeBtn);
+		serverPanel2.add(getShapeByIdBtn);
+		serverPanel2.add(getAllShapesBtn);
+
+		var buttonPanel = new JPanel();
+		buttonPanel.setPreferredSize(new Dimension(500, 200));
+
+		var serverPanels = new JPanel();
+		serverPanels.setPreferredSize(new Dimension(500, 150));
+		serverPanels.add(serverPanel1, BorderLayout.NORTH);
+		serverPanels.add(serverPanel2, BorderLayout.SOUTH);
+
+		buttonPanel.add(movingPanel, BorderLayout.NORTH);
+		buttonPanel.add(serverPanels, BorderLayout.SOUTH);
+
 		add(comboBoxPanel, BorderLayout.NORTH);
 		add(drawingPanel);
 		add(buttonPanel, BorderLayout.SOUTH);
@@ -181,12 +270,6 @@ public class ClientFrame extends JFrame {
 		loadObjectMenuItem.addActionListener(e -> loadFromSerial());
 		saveXMLMenuItem.addActionListener(e -> saveToXML());
 		loadXMLMenuItem.addActionListener(e -> loadFromXML());
-
-		// сервер
-		initializeConnectionButton.addActionListener(e -> {
-			serverDialog = new ServerDialog(this);
-			serverDialog.setVisible(true);
-		});
 	}
 
 	private void addMouseListenerToDrawingPanel() {
@@ -385,7 +468,7 @@ public class ClientFrame extends JFrame {
 			xstream.allowTypeHierarchy(Image.class);
 			try(FileReader reader = new FileReader(selectedFile)) {
 				shapes.clear();
-				shapes = (ArrayList<Shape>) xstream.fromXML(reader);
+				shapes = (CopyOnWriteArrayList<Shape>) xstream.fromXML(reader);
 				shapes.forEach(s -> {
 					if (s instanceof Image) {
 						((Image) s).loadImage();
