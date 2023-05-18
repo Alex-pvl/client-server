@@ -10,8 +10,8 @@ import client.models.Shape;
 import client.models.ShapeFactory;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
-import server.udp.Client;
-import server.udp.Server;
+import server.spark_retrofit.RetrofitClient;
+import server.spark_retrofit.SparkServer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -56,26 +56,21 @@ public class ClientFrame extends JFrame {
 	@XStreamAsAttribute
 	public ArrayList<Shape> shapes;
 	private ShapeFactory shapeFactory;
-	public JTextField portInTextField;
-	public JTextField portOutTextField;
-	public JLabel portInLabel;
-	public JLabel portOutLabel;
 	public JButton serverBtn;
 	public JButton clientBtn;
 
-	public JButton closeConnectionBtn;
-	public JButton clearListBtn;
-	public JButton sendNamesBtn;
-	public JButton getListSizeBtn;
 	public JButton getShapeByIdBtn;
 	public JButton getAllShapesBtn;
+	public JButton getShapeNamesBtn;
+	public JButton postShapeBtn;
+	public JButton deleteShapeBtn;
 	public JLabel shapeIdLabel;
 	public JTextField shapeIdTextField;
 
-	public JLabel connectionStatusLabel;
 	public JLabel shapesSizeLabel;
 
-	public Client client;
+	public SparkServer sparkServer;
+	public RetrofitClient retrofitClient;
 
 	public ClientFrame() throws IOException {
 		super("Client");
@@ -166,7 +161,7 @@ public class ClientFrame extends JFrame {
 		movingPanel.add(startTypeButton);
 		movingPanel.add(stopTypeButton);
 
-		// UDP
+		// Spark-Retrofit
 		var btnSize = new Dimension(150, 25);
 		serverPanel0 = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		serverPanel0.setPreferredSize(new Dimension(350, 20));
@@ -175,92 +170,70 @@ public class ClientFrame extends JFrame {
 		serverPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		serverPanel2.setPreferredSize(new Dimension(500, 60));
 
-		connectionStatusLabel = new JLabel("Connection: " + false);
 		shapesSizeLabel = new JLabel("Size: " + shapes.size());
 
-		portInLabel = new JLabel("Port (in): ");
-		portInTextField = new JTextField(3);
-		portInTextField.setText("5001");
-		portOutLabel = new JLabel("Port (out): ");
-		portOutTextField = new JTextField(3);
-		portOutTextField.setText("5002");
 		shapeIdLabel = new JLabel("Shape ID: ");
 		shapeIdTextField = new JTextField(1);
 		shapeIdTextField.setText("0");
 		serverBtn = new JButton("Launch Server");
 		serverBtn.setPreferredSize(btnSize);
 		serverBtn.addActionListener(e -> {
-			int portIn = Integer.parseInt(portInTextField.getText().trim());
-			int portOut = Integer.parseInt(portOutTextField.getText().trim());
-			Server server = new Server(this, portOut, portIn);
-			server.start();
+			sparkServer = new SparkServer(this);
+			sparkServer.startListening();
 		});
+
 		clientBtn = new JButton("Launch Client");
 		clientBtn.setPreferredSize(btnSize);
-		clientBtn.addActionListener(e -> {
-			int portIn = Integer.parseInt(portInTextField.getText().trim());
-			int portOut = Integer.parseInt(portOutTextField.getText().trim());
-			client = new Client(this, portOut, portIn);
-			client.start();
-		});
+		clientBtn.addActionListener(e -> retrofitClient = new RetrofitClient());
 
-		closeConnectionBtn = new JButton("Close Connection");
-		closeConnectionBtn.setPreferredSize(btnSize);
-		closeConnectionBtn.addActionListener(e -> {
-			client.send("CLOSE");
-		});
-
-		clearListBtn = new JButton("Clear");
-		clearListBtn.setPreferredSize(btnSize);
-		clearListBtn.addActionListener(e -> {
-			client.send("CLEAR");
-		});
-
-		sendNamesBtn = new JButton("Send Names");
-		sendNamesBtn.setPreferredSize(btnSize);
-		sendNamesBtn.addActionListener(e -> {
-			var names = shapes.stream()
-				.map(Shape::toString)
-				.toList();
-			client.send("SEND NAMES:" + names);
-		});
-
-		getListSizeBtn = new JButton("Get List Size");
-		getListSizeBtn.setPreferredSize(btnSize);
-		getListSizeBtn.addActionListener(e -> {
-			client.send("GET SIZE");
-		});
-
-		getShapeByIdBtn = new JButton("Get Shape");
+		getShapeByIdBtn = new JButton("GET by Id");
 		getShapeByIdBtn.setPreferredSize(btnSize);
 		getShapeByIdBtn.addActionListener(e -> {
 			int id = Integer.parseInt(shapeIdTextField.getText().trim());
-			client.send("GET SHAPE:" + id);
+			var s = retrofitClient.getShapeById(id);
+			//drawingPanel.repaint();
+			//shapes.add(s);
 		});
 
-		getAllShapesBtn = new JButton("Get All Shapes");
+		getAllShapesBtn = new JButton("GET all");
 		getAllShapesBtn.setPreferredSize(btnSize);
 		getAllShapesBtn.addActionListener(e -> {
-			client.send("GET ALL SHAPES");
+			var list = retrofitClient.getAll();
+			System.out.println(list);
+			//drawingPanel.repaint();
+		});
+
+		getShapeNamesBtn = new JButton("GET names");
+		getShapeNamesBtn.setPreferredSize(btnSize);
+		getShapeNamesBtn.addActionListener(e -> {
+			System.out.println(retrofitClient.getShapeNames());
+		});
+
+		postShapeBtn = new JButton("POST shape");
+		postShapeBtn.setPreferredSize(btnSize);
+		postShapeBtn.addActionListener(e -> {
+			int id = Integer.parseInt(shapeIdTextField.getText().trim());
+			retrofitClient.postShape(shapes.get(id));
+		});
+
+		deleteShapeBtn = new JButton("DELETE shape");
+		deleteShapeBtn.setPreferredSize(btnSize);
+		deleteShapeBtn.addActionListener(e -> {
+			int id = Integer.parseInt(shapeIdTextField.getText().trim());
+			retrofitClient.deleteShape(id);
 		});
 
 
-		serverPanel0.add(connectionStatusLabel, BorderLayout.WEST);
 		serverPanel0.add(shapesSizeLabel, BorderLayout.EAST);
-		serverPanel1.add(portInLabel);
-		serverPanel1.add(portInTextField);
-		serverPanel1.add(portOutLabel);
-		serverPanel1.add(portOutTextField);
 		serverPanel1.add(shapeIdLabel);
 		serverPanel1.add(shapeIdTextField);
 		serverPanel1.add(serverBtn);
 		serverPanel1.add(clientBtn);
-		serverPanel2.add(closeConnectionBtn);
-		serverPanel2.add(clearListBtn);
-		serverPanel2.add(sendNamesBtn);
-		serverPanel2.add(getListSizeBtn);
 		serverPanel2.add(getShapeByIdBtn);
 		serverPanel2.add(getAllShapesBtn);
+		serverPanel2.add(getShapeNamesBtn);
+		serverPanel2.add(postShapeBtn);
+		serverPanel2.add(deleteShapeBtn);
 
 		var buttonPanel = new JPanel();
 		buttonPanel.setPreferredSize(new Dimension(500, 230));

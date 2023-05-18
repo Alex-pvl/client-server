@@ -71,6 +71,26 @@ public abstract class Shape implements Serializable {
 		color = new Color(r, g, b);
 	}
 
+	public void setX(double x) {
+		this.x = x;
+	}
+
+	public void setY(double y) {
+		this.y = y;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 	public void writeText(BufferedWriter writer) throws IOException {
 		writeLine(writer, x, y, width, height, color.getRed(), color.getGreen(), color.getBlue());
 	}

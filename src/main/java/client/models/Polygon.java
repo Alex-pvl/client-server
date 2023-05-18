@@ -149,6 +149,38 @@ public class Polygon extends Shape implements Serializable {
 			"}";
 	}
 
+	public int getN() {
+		return n;
+	}
+
+	public void setN(int n) {
+		this.n = n;
+	}
+
+	public int getRadius() {
+		return radius;
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
+
+	public int[] getxPoints() {
+		return xPoints;
+	}
+
+	public void setxPoints(int[] xPoints) {
+		this.xPoints = xPoints;
+	}
+
+	public int[] getyPoints() {
+		return yPoints;
+	}
+
+	public void setyPoints(int[] yPoints) {
+		this.yPoints = yPoints;
+	}
+
 	private void setPoints() {
 		for (int i = 0; i < n; i++) {
 			double angle = 2 * Math.PI * i / n;

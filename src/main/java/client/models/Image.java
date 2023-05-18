@@ -13,6 +13,15 @@ import java.io.*;
 public class Image extends Shape implements Serializable {
 	@XStreamAsAttribute
 	private String path;
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	private transient BufferedImage image;
 
 	public Image() {}
