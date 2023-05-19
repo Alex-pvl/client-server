@@ -1,5 +1,7 @@
 package server.spark_retrofit;
 
+import client.gui.ClientFrame;
+import client.models.Image;
 import client.models.Shape;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,9 +21,11 @@ import java.util.List;
 public class RetrofitClient {
 	private ApiRoutes apiRoutes;
 	public ArrayList<Shape> list;
+	public ClientFrame clientFrame;
 	Gson gson;
 
-	public RetrofitClient() {
+	public RetrofitClient(ClientFrame clientFrame) {
+		this.clientFrame = clientFrame;
 		list = new ArrayList<>();
 		gson = new GsonBuilder().registerTypeAdapter(Shape.class, new ShapeAdapter()).create();
 
@@ -33,30 +37,26 @@ public class RetrofitClient {
 		apiRoutes = retrofit.create(ApiRoutes.class);
 	}
 
-	public void start() {
-
-	}
-
 	public ArrayList<Shape> getAll() {
 		var call = apiRoutes.getShapes();
 		call.enqueue(new Callback<ArrayList<Shape>>() {
 			@Override
 			public void onResponse(Call<ArrayList<Shape>> call, Response<ArrayList<Shape>> response) {
-				System.out.println("Call request" + call.request());
-				System.out.println("Call request header" + call.request().headers());
-				System.out.println("Response raw header"+ response.headers());
-				System.out.println("Response raw"+ String.valueOf(response.raw().body()));
-				System.out.println("Response code"+ String.valueOf(response.code()));
-
 				if(response.isSuccessful()) {
-					//the response-body is already parseable to your ResponseBody object
 					ArrayList<Shape> responseBody =  response.body();
 					list = responseBody;
-					//you can do whatever with the response body now...
+					clientFrame.shapes = list;
+					clientFrame.shapes.forEach(shape -> {
+						if (shape instanceof Image image) {
+							image.loadImage();
+						}
+						shape.setComponent(clientFrame.drawingPanel);
+					});
+					clientFrame.drawingPanel.repaint();
 					System.out.println("Response body"+ responseBody);
 				}
 				else  {
-					System.out.println("Response errorBody"+ String.valueOf(response.errorBody()));
+					System.out.println("Response errorBody" + response.errorBody());
 				}
 			}
 

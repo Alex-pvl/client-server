@@ -184,22 +184,33 @@ public class ClientFrame extends JFrame {
 
 		clientBtn = new JButton("Launch Client");
 		clientBtn.setPreferredSize(btnSize);
-		clientBtn.addActionListener(e -> retrofitClient = new RetrofitClient());
+		clientBtn.addActionListener(e -> retrofitClient = new RetrofitClient(this));
 
 		getShapeByIdBtn = new JButton("GET by Id");
 		getShapeByIdBtn.setPreferredSize(btnSize);
 		getShapeByIdBtn.addActionListener(e -> {
 			int id = Integer.parseInt(shapeIdTextField.getText().trim());
 			var s = retrofitClient.getShapeById(id);
-			//drawingPanel.repaint();
-			//shapes.add(s);
+			if (s instanceof Image) {
+				((Image) s).loadImage();
+			}
+			shapes.add(s);
+			s.setComponent(drawingPanel);
+			drawingPanel.repaint();
 		});
 
 		getAllShapesBtn = new JButton("GET all");
 		getAllShapesBtn.setPreferredSize(btnSize);
 		getAllShapesBtn.addActionListener(e -> {
 			var list = retrofitClient.getAll();
-			System.out.println(list);
+			//System.out.println(list);
+			list.forEach(s -> {
+				if (s instanceof Image) {
+					((Image) s).loadImage();
+				}
+				s.setComponent(drawingPanel);
+			});
+			drawingPanel.repaint();
 			//drawingPanel.repaint();
 		});
 

@@ -9,9 +9,11 @@ import java.util.List;
 public class ShapeServiceImpl implements ShapeService {
 
 	public ArrayList<Shape> shapes;
+	public ClientFrame clientFrame;
 
-	public ShapeServiceImpl() {
-		this.shapes = new ArrayList<>();
+	public ShapeServiceImpl(ClientFrame clientFrame) {
+		this.clientFrame = clientFrame;
+		this.shapes = clientFrame.shapes;
 	}
 
 	@Override

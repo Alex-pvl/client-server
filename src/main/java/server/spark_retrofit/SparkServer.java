@@ -1,6 +1,7 @@
 package server.spark_retrofit;
 
 import client.gui.ClientFrame;
+import client.models.Image;
 import client.models.Shape;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,7 +22,7 @@ public class SparkServer {
 
 	public SparkServer(ClientFrame clientFrame) {
 		this.clientFrame = clientFrame;
-		shapeService = new ShapeServiceImpl();
+		shapeService = new ShapeServiceImpl(clientFrame);
 		gson = new GsonBuilder().registerTypeAdapter(Shape.class, new ShapeAdapter()).create();
 	}
 
@@ -44,10 +45,14 @@ public class SparkServer {
 		Spark.post("/api/shapes", (req, res) -> {
 			res.type("application/json");
 			Shape s = gson.fromJson(req.body(), Shape.class);
-			var isSuccess = shapeService.addShape(s);
-			return isSuccess ?
-				new Gson().toJson(SimpleResponse.SUCCESS) :
-				new Gson().toJson(SimpleResponse.ERROR);
+//			shapeService.addShape(s);
+			clientFrame.shapes.add(s);
+			if (s instanceof Image image) {
+				image.loadImage();
+			}
+			s.setComponent(clientFrame.drawingPanel);
+			clientFrame.drawingPanel.repaint();
+			return gson.toJson(s, Shape.class);
 		});
 		Spark.get("/api/shapes/:id", (req, res) -> {
 			res.type("application/json");
@@ -58,10 +63,10 @@ public class SparkServer {
 		Spark.delete("/api/shapes/:id", (req, res) -> {
 			res.type("application/json");
 			int id = Integer.parseInt(req.params(":id"));
-			var isSuccess = shapeService.deleteById(id);
-			return isSuccess ?
-				new Gson().toJson(SimpleResponse.SUCCESS) :
-				new Gson().toJson(SimpleResponse.ERROR);
+			//var isSuccess = shapeService.deleteById(id);
+			clientFrame.shapes.remove(id);
+			clientFrame.drawingPanel.repaint();
+			return "Success";
 		});
 	}
 }

@@ -9,15 +9,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="логика для udp">
+    <list default="true" id="f04b9888-d3cb-4f50-854c-d8907f4fea2d" name="Changes" comment="настроил spark и retrofit. осталось подружить с gui клиентом">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/gui/ClientFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/models/Image.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/models/Image.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/models/Polygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/models/Polygon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/client/models/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/client/models/Shape.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/udp/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/udp/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/server/udp/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/udp/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/spark_retrofit/RetrofitClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/spark_retrofit/RetrofitClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/spark_retrofit/SparkServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/spark_retrofit/SparkServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/spark_retrofit/service/ShapeServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/spark_retrofit/service/ShapeServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/server/spark_retrofit/utils/ShapeAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/server/spark_retrofit/utils/ShapeAdapter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,18 +65,18 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/sasha/dev/Java/client-server/src/main/java/client",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.28390804"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sasha/dev/Java/client-server/src/main/java/client&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.28390804&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sasha\dev\Java\client-server\lib" />
@@ -97,6 +96,19 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="client.gui.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ShapeAdapter" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="server.spark_retrofit.utils.ShapeAdapter" />
+      <module name="client-server" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="server.spark_retrofit.utils.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -136,6 +148,7 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="Application.ShapeAdapter" />
       <item itemvalue="Application.SparkServer" />
       <item itemvalue="Application.MainFrame" />
       <item itemvalue="Application.StartServer" />
@@ -144,6 +157,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.MainFrame" />
+        <item itemvalue="Application.ShapeAdapter" />
         <item itemvalue="Application.SparkServer" />
         <item itemvalue="Application.StartServer" />
         <item itemvalue="JAR Application.client-server.jar" />
@@ -169,7 +183,8 @@
       <workItem from="1683433166571" duration="25768000" />
       <workItem from="1683463682189" duration="1694000" />
       <workItem from="1684331798572" duration="4075000" />
-      <workItem from="1684400199552" duration="23389000" />
+      <workItem from="1684400199552" duration="23755000" />
+      <workItem from="1684474791864" duration="4499000" />
     </task>
     <task id="LOCAL-00001" summary="Initialized">
       <created>1682879244024</created>
@@ -220,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1683464152065</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="настроил spark и retrofit. осталось подружить с gui клиентом">
+      <created>1684435277221</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1684435277221</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -241,6 +263,7 @@
     <MESSAGE value="бизнес-логика" />
     <MESSAGE value="ui для udp" />
     <MESSAGE value="логика для udp" />
-    <option name="LAST_COMMIT_MESSAGE" value="логика для udp" />
+    <MESSAGE value="настроил spark и retrofit. осталось подружить с gui клиентом" />
+    <option name="LAST_COMMIT_MESSAGE" value="настроил spark и retrofit. осталось подружить с gui клиентом" />
   </component>
 </project>
