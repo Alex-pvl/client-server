@@ -1,1 +1,163 @@
 [
+  {
+    "n": 3,
+    "radius": 24,
+    "xPoints": [
+      113,
+      77,
+      76
+    ],
+    "yPoints": [
+      242,
+      262,
+      221
+    ],
+    "x": 89.0,
+    "y": 242.0,
+    "width": 48,
+    "height": 48,
+    "color_r": 120,
+    "color_g": 41,
+    "color_b": 89,
+    "name": "Polygon"
+  },
+  {
+    "n": 3,
+    "radius": 80,
+    "xPoints": [
+      562,
+      442,
+      441
+    ],
+    "yPoints": [
+      68,
+      137,
+      -1
+    ],
+    "x": 482.0,
+    "y": 68.0,
+    "width": 160,
+    "height": 160,
+    "color_r": 60,
+    "color_g": 190,
+    "color_b": 40,
+    "name": "Polygon"
+  },
+  {
+    "n": 5,
+    "radius": 13,
+    "xPoints": [
+      689,
+      680,
+      665,
+      665,
+      680
+    ],
+    "yPoints": [
+      219,
+      231,
+      226,
+      211,
+      206
+    ],
+    "x": 676.0,
+    "y": 219.0,
+    "width": 26,
+    "height": 26,
+    "color_r": 195,
+    "color_g": 216,
+    "color_b": 145,
+    "name": "Polygon"
+  },
+  {
+    "n": 5,
+    "radius": 84,
+    "xPoints": [
+      250,
+      191,
+      98,
+      98,
+      191
+    ],
+    "yPoints": [
+      361,
+      440,
+      410,
+      311,
+      281
+    ],
+    "x": 166.0,
+    "y": 361.0,
+    "width": 168,
+    "height": 168,
+    "color_r": 106,
+    "color_g": 188,
+    "color_b": 141,
+    "name": "Polygon"
+  },
+  {
+    "path": "/resources/11.png",
+    "x": 176.0,
+    "y": 68.0,
+    "width": 100,
+    "height": 100,
+    "color_r": 62,
+    "color_g": 205,
+    "color_b": 137,
+    "name": "Image"
+  },
+  {
+    "path": "/resources/2.png",
+    "x": 390.0,
+    "y": 266.0,
+    "width": 100,
+    "height": 100,
+    "color_r": 51,
+    "color_g": 66,
+    "color_b": 33,
+    "name": "Image"
+  },
+  {
+    "path": "/resources/4.png",
+    "x": 600.0,
+    "y": 176.0,
+    "width": 100,
+    "height": 100,
+    "color_r": 205,
+    "color_g": 166,
+    "color_b": 63,
+    "name": "Image"
+  },
+  {
+    "n": 8,
+    "radius": 100,
+    "xPoints": [
+      435,
+      405,
+      335,
+      264,
+      235,
+      264,
+      335,
+      405
+    ],
+    "yPoints": [
+      109,
+      179,
+      209,
+      179,
+      109,
+      38,
+      9,
+      38
+    ],
+    "x": 335.0,
+    "y": 109.0,
+    "width": 200,
+    "height": 200,
+    "color_r": 92,
+    "color_g": 180,
+    "color_b": 50,
+    "name": "Polygon"
+  }
+]

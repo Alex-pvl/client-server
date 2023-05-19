@@ -5,7 +5,6 @@ import client.models.Image;
 import client.models.Shape;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +52,6 @@ public class RetrofitClient {
 						shape.setComponent(clientFrame.drawingPanel);
 					});
 					clientFrame.drawingPanel.repaint();
-					System.out.println("Response body"+ responseBody);
 				}
 				else  {
 					System.out.println("Response errorBody" + response.errorBody());
@@ -70,9 +68,7 @@ public class RetrofitClient {
 
 	public Shape getShapeById(int id) {
 		try {
-			var shape = apiRoutes.getShape(id).execute().body();
-			System.out.println(shape);
-			return shape;
+			return apiRoutes.getShape(id).execute().body();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}

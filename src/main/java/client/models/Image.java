@@ -24,10 +24,13 @@ public class Image extends Shape implements Serializable {
 
 	private transient BufferedImage image;
 
-	public Image() {}
+	public Image() {
+		this.name = getName();
+	}
 
 	public Image(double x, double y, int width, int height, String path) {
 		super(x, y, width, height);
+		this.name = getName();
 		this.path = path;
 		loadImage();
 	}

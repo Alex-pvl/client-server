@@ -2,7 +2,6 @@ package server.spark_retrofit.service;
 
 import client.models.Shape;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

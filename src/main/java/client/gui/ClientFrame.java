@@ -8,10 +8,13 @@ import client.models.Image;
 import client.models.Polygon;
 import client.models.Shape;
 import client.models.ShapeFactory;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamAsAttribute;
 import server.spark_retrofit.RetrofitClient;
 import server.spark_retrofit.SparkServer;
+import server.spark_retrofit.utils.ShapeAdapter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +25,7 @@ import java.awt.event.WindowEvent;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -56,6 +60,7 @@ public class ClientFrame extends JFrame {
 	@XStreamAsAttribute
 	public ArrayList<Shape> shapes;
 	private ShapeFactory shapeFactory;
+	private JButton getJsonObjectsBtn;
 	public JButton serverBtn;
 	public JButton clientBtn;
 
@@ -66,8 +71,6 @@ public class ClientFrame extends JFrame {
 	public JButton deleteShapeBtn;
 	public JLabel shapeIdLabel;
 	public JTextField shapeIdTextField;
-
-	public JLabel shapesSizeLabel;
 
 	public SparkServer sparkServer;
 	public RetrofitClient retrofitClient;
@@ -98,6 +101,7 @@ public class ClientFrame extends JFrame {
 	}
 
 	private void addComponents() {
+		//shapes = readShapesFromJson("C:\\Users\\sasha\\dev\\Java\\client-server\\shapes.json");
 		shapes = new ArrayList<>();
 		shapeFactory = new ShapeFactory();
 
@@ -170,8 +174,6 @@ public class ClientFrame extends JFrame {
 		serverPanel2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		serverPanel2.setPreferredSize(new Dimension(500, 60));
 
-		shapesSizeLabel = new JLabel("Size: " + shapes.size());
-
 		shapeIdLabel = new JLabel("Shape ID: ");
 		shapeIdTextField = new JTextField(1);
 		shapeIdTextField.setText("0");
@@ -203,7 +205,6 @@ public class ClientFrame extends JFrame {
 		getAllShapesBtn.setPreferredSize(btnSize);
 		getAllShapesBtn.addActionListener(e -> {
 			var list = retrofitClient.getAll();
-			//System.out.println(list);
 			list.forEach(s -> {
 				if (s instanceof Image) {
 					((Image) s).loadImage();
@@ -211,7 +212,6 @@ public class ClientFrame extends JFrame {
 				s.setComponent(drawingPanel);
 			});
 			drawingPanel.repaint();
-			//drawingPanel.repaint();
 		});
 
 		getShapeNamesBtn = new JButton("GET names");
@@ -234,8 +234,19 @@ public class ClientFrame extends JFrame {
 			retrofitClient.deleteShape(id);
 		});
 
+		getJsonObjectsBtn = new JButton("load from JSON");
+		getJsonObjectsBtn.setPreferredSize(btnSize);
+		getJsonObjectsBtn.addActionListener(e -> {
+			this.shapes = readShapesFromJson();
+			shapes.forEach(s -> {
+				if (s instanceof Image image) {
+					image.loadImage();
+				}
+				s.setComponent(drawingPanel);
+			});
+			this.drawingPanel.repaint();
+		});
 
-		serverPanel0.add(shapesSizeLabel, BorderLayout.EAST);
 		serverPanel1.add(shapeIdLabel);
 		serverPanel1.add(shapeIdTextField);
 		serverPanel1.add(serverBtn);
@@ -245,6 +256,7 @@ public class ClientFrame extends JFrame {
 		serverPanel2.add(getShapeNamesBtn);
 		serverPanel2.add(postShapeBtn);
 		serverPanel2.add(deleteShapeBtn);
+		serverPanel2.add(getJsonObjectsBtn);
 
 		var buttonPanel = new JPanel();
 		buttonPanel.setPreferredSize(new Dimension(500, 230));
@@ -267,6 +279,7 @@ public class ClientFrame extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 			super.windowClosing(e);
+			saveToJson();
 			shapes.forEach(Shape::stop);
 			}
 		});
@@ -537,5 +550,32 @@ public class ClientFrame extends JFrame {
 		return Objects.requireNonNull(
 			shapeTypeSelection.getSelectedItem()
 		).toString();
+	}
+
+	private void saveToJson() {
+		Gson gson = new GsonBuilder()
+			.registerTypeAdapter(Shape.class, new ShapeAdapter())
+			.setPrettyPrinting()
+			.create();
+
+		try (FileWriter writer = new FileWriter("shapes.json")) {
+			gson.toJson(shapes, writer);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private ArrayList<Shape> readShapesFromJson() {
+		try (FileReader reader = new FileReader("shapes.json")) {
+			Gson gson = new GsonBuilder()
+				.registerTypeAdapter(Shape.class, new ShapeAdapter())
+				.create();
+			Shape[] shapeArray = gson.fromJson(reader, Shape[].class);
+			ArrayList<Shape> shapes = new ArrayList<>(Arrays.asList(shapeArray));
+			return shapes;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ArrayList<>();
 	}
 }

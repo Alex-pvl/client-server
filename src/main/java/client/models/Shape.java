@@ -19,27 +19,67 @@ public abstract class Shape implements Serializable {
 	@XStreamAsAttribute
 	protected int height;
 	@XStreamAsAttribute
-	protected Color color;
+	protected transient Color color;
+	protected int color_r;
+	protected int color_g;
+	protected int color_b;
+
+	public int getColor_r() {
+		return color_r;
+	}
+
+	public void setColor_r(int color_r) {
+		this.color_r = color_r;
+	}
+
+	public int getColor_g() {
+		return color_g;
+	}
+
+	public void setColor_g(int color_g) {
+		this.color_g = color_g;
+	}
+
+	public int getColor_b() {
+		return color_b;
+	}
+
+	public void setColor_b(int color_b) {
+		this.color_b = color_b;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	protected String name;
 	protected transient Graphics graphics;
 	protected transient Component component;
 
 	public Shape() {
+		color_r = (int) (Math.random() * 255);
+		color_g = (int) (Math.random() * 255);
+		color_b = (int) (Math.random() * 255);
 		color = new Color(
-			(int) (Math.random() * 255),
-			(int) (Math.random() * 255),
-			(int) (Math.random() * 255)
+			color_r,
+			color_g,
+			color_b
 		);
 	}
 
 	public Shape(double x, double y, int width, int height) {
+		this.name = getName();
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
+		color_r = (int) (Math.random() * 255);
+		color_g = (int) (Math.random() * 255);
+		color_b = (int) (Math.random() * 255);
 		color = new Color(
-			(int) (Math.random() * 255),
-			(int) (Math.random() * 255),
-			(int) (Math.random() * 255)
+			color_r,
+			color_g,
+			color_b
 		);
 	}
 

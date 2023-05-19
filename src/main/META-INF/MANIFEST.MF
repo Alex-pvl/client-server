@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Main-Class: client.gui.MainFrame
-Class-Path: mxparser-1.2.2.jar xmlpull-1.1.3.1.jar xstream-1.4.20.jar
-

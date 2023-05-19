@@ -16,10 +16,13 @@ public class Polygon extends Shape implements Serializable {
 	private int[] yPoints;
 	private transient boolean increasing;
 
-	public Polygon() {}
+	public Polygon() {
+		this.name = getName();
+	}
 
 	public Polygon(double x, double y, int n) {
 		super(x, y, 0, 0);
+		this.name = getName();
 		radius = (int) (Math.random() * 100 + 1);
 		width = height = radius * 2;
 		this.n = n;
